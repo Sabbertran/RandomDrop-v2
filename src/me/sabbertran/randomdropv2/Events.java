@@ -1,8 +1,12 @@
 package me.sabbertran.randomdropv2;
 
+import java.util.ArrayList;
 import java.util.Random;
+import me.sabbertran.randomdropv2.region.Region;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class Events implements Listener
 {
@@ -18,11 +22,31 @@ public class Events implements Listener
 
     public void onPlayerMove(PlayerMoveEvent ev)
     {
-        if (main.getDropsEnabled())
+        Player p = ev.getPlayer();
+
+        if (main.isDropsEnabled())
         {
             if (r.nextInt(main.getGlobalDropChance()) == 0)
             {
-                
+                Region applicable = null;
+                for (Region r : main.getRegions())
+                {
+                    if (r.inRegion(p.getLocation()))
+                    {
+                        if (applicable == null || r.getPriority() > applicable.getPriority())
+                        {
+                            applicable = r;
+                        }
+                    }
+                }
+
+                if (applicable != null)
+                {
+                    for (ArrayList<ItemStack> is : applicable.getDrops())
+                    {
+                        
+                    }
+                }
             }
         }
     }
