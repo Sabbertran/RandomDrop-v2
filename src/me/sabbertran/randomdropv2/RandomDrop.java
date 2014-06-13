@@ -2,17 +2,21 @@ package me.sabbertran.randomdropv2;
 
 import java.util.ArrayList;
 import java.util.logging.Logger;
+import me.sabbertran.randomdropv2.commands.RegionCommand;
 import me.sabbertran.randomdropv2.region.Region;
 import org.bukkit.Bukkit;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class RandomDrop extends JavaPlugin
 {
 
     private Events events;
+    private RegionCommand rgcmd;
 
     private boolean dropsEnabled;
     private int globalDropChance;
+    private ItemStack tool;
     
     private ArrayList<Region> regions;
 
@@ -59,10 +63,10 @@ public class RandomDrop extends JavaPlugin
     {
         return regions;
     }
-
-    public void setRegions(ArrayList<Region> regions)
+    
+    public RegionCommand getRegionCommand()
     {
-        this.regions = regions;
+        return rgcmd;
     }
 
     

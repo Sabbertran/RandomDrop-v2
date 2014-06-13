@@ -11,13 +11,25 @@ public class Region
 
     private RandomDrop main;
 
+    private String name;
     private World world;
     private int minX, minY, minZ, maxX, maxY, maxZ, priority;
 
-    private ArrayList<ArrayList<ItemStack>> drops;
+    private ArrayList<ItemStack>[] drops;
 
-    public Region(Location loc1, Location loc2, int priority)
+    /**
+     * Drop Chances (Drop Level - Chance) 1 - 18%; 2 - 16%; 3 - 15%; 4 - 13%; 5 -
+     * 11%; 6 - 9%; 7 - 7%; 8 - 5%; 9 - 4%; 10 - 2%
+     */
+    public Region(String name, Location loc1, Location loc2)
     {
+        this(name, loc1, loc2, 0);
+    }
+
+    public Region(String name, Location loc1, Location loc2, int priority)
+    {
+        this.name = name;
+        
         this.minX = Math.min(loc1.getBlockX(), loc2.getBlockX());
         this.minY = Math.min(loc1.getBlockY(), loc2.getBlockY());
         this.minZ = Math.min(loc1.getBlockZ(), loc2.getBlockZ());
@@ -28,6 +40,8 @@ public class Region
 
         this.world = loc1.getWorld();
         this.priority = priority;
+
+        this.drops = new ArrayList[10];
     }
 
     public boolean inRegion(Location loc)
@@ -45,17 +59,22 @@ public class Region
         return false;
     }
 
+    public String getName()
+    {
+        return name;
+    }
+    
     public int getPriority()
     {
         return priority;
     }
 
-    public ArrayList<ArrayList<ItemStack>> getDrops()
+    public ArrayList<ItemStack>[] getDrops()
     {
         return drops;
     }
 
-    public void setDrops(ArrayList<ArrayList<ItemStack>> drops)
+    public void setDrops(ArrayList<ItemStack>[] drops)
     {
         this.drops = drops;
     }
